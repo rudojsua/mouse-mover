@@ -18,7 +18,8 @@ public class MouseMover {
         System.out.println("Start  " + timeStamp);
         int[] extractedHourAndMinute = extractedHourAndMinute(args);
         if (extractedHourAndMinute[0] != 0) {
-            System.out.println("The program will stop at " + extractedHourAndMinute[0] + ":" + extractedHourAndMinute[1]);
+            System.out.println("The program will stop at " + extractedHourAndMinute[0] + ":"
+                    + ((extractedHourAndMinute[1] < 10) ? "0" + extractedHourAndMinute[1] : "" + extractedHourAndMinute[1]));
         } else {
             System.out.println("The program will not stop automatically");
         }
