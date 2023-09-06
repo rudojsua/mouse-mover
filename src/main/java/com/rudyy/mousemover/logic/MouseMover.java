@@ -18,15 +18,15 @@ public class MouseMover {
         System.out.println("Start  " + timeStamp);
         int[] extractedHourAndMinute = extractedHourAndMinute(args);
         if (extractedHourAndMinute[0] != 0) {
-            System.out.println("The Program will stops at " + extractedHourAndMinute[0] + ":" + extractedHourAndMinute[1]);
-        }else {
+            System.out.println("The program will stop at " + extractedHourAndMinute[0] + ":" + extractedHourAndMinute[1]);
+        } else {
             System.out.println("The program will not stop automatically");
         }
         boolean checkTime = true;
         boolean ifTimeWasSend = extractedHourAndMinute[0] != 0;
 
         while (checkTime) {
-            checkTime = ifSendTimeEqualsCurrentTome(checkTime, ifTimeWasSend, extractedHourAndMinute);
+            checkTime = ifSendTimeEqualsCurrentTime(checkTime, ifTimeWasSend, extractedHourAndMinute);
             a = MouseInfo.getPointerInfo();
             b = a.getLocation();
             x = (int) b.getX();
@@ -43,10 +43,10 @@ public class MouseMover {
             }
         }
         LocalTime localTime = LocalTime.now();
-        System.out.println("Program was stopped at: " + localTime.getHour() + ":" + localTime.getMinute());
+        System.out.println("The program was stopped at: " + localTime.getHour() + ":" + localTime.getMinute());
     }
 
-    static boolean ifSendTimeEqualsCurrentTome(Boolean checkTime, Boolean ifTimeWasSend, int[] extractedHourAndMinute) {
+    public static boolean ifSendTimeEqualsCurrentTime(boolean checkTime, boolean ifTimeWasSend, int[] extractedHourAndMinute) {
         if (checkTime == true && ifTimeWasSend == true) {
             Date date = new Date();
             LocalTime localTime = date.toInstant().atZone(java.time.ZoneId.systemDefault()).toLocalTime();
@@ -59,7 +59,7 @@ public class MouseMover {
         return true;
     }
 
-      static int[] extractedHourAndMinute(String[] args) throws ToMachArgumentsException {
+    static int[] extractedHourAndMinute(String[] args) throws ToMachArgumentsException {
         int[] receiveHourAndMinute = new int[2];
         if (args.length == 0) {
             return receiveHourAndMinute;
@@ -81,6 +81,4 @@ public class MouseMover {
         }
         return receiveHourAndMinute;
     }
-
-
 }
