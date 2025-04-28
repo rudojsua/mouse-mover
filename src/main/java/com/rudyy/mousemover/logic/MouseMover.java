@@ -8,43 +8,47 @@ import java.util.Date;
 
 public class MouseMover {
     public static void main(String[] args) throws AWTException, InterruptedException, ToMachArgumentsException {
-        PointerInfo a;
-        Point b;
-        int x;
-        int y;
-        final long startTime = System.currentTimeMillis();
-        int howLongWorks;
-        String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
-        System.out.println("Start  " + timeStamp);
-        int[] extractedHourAndMinute = extractedHourAndMinute(args);
-        if (extractedHourAndMinute[0] != 0) {
-            System.out.println("The program will stop at " + extractedHourAndMinute[0] + ":"
-                    + ((extractedHourAndMinute[1] < 10) ? "0" + extractedHourAndMinute[1] : "" + extractedHourAndMinute[1]));
-        } else {
-            System.out.println("The program will not stop automatically");
-        }
-        boolean checkTime = true;
-        boolean ifTimeWasSend = extractedHourAndMinute[0] != 0;
-
-        while (checkTime) {
-            checkTime = ifSendTimeEqualsCurrentTime(checkTime, ifTimeWasSend, extractedHourAndMinute);
-            a = MouseInfo.getPointerInfo();
-            b = a.getLocation();
-            x = (int) b.getX();
-            y = (int) b.getY();
-            Robot r = new Robot();
-            r.mouseMove(x + 1, y + 1);
-            r.mouseMove(x - 1, y - 1);
-            Thread.sleep(55000);
-            howLongWorks = (int) (System.currentTimeMillis() - startTime) / 1000 / 60;
-            if ((howLongWorks % 60) < 10) {
-                System.out.println(howLongWorks / 60 + ":0" + (howLongWorks % 60));
+        try {
+            PointerInfo a;
+            Point b;
+            int x;
+            int y;
+            final long startTime = System.currentTimeMillis();
+            int howLongWorks;
+            String timeStamp = new SimpleDateFormat("HH:mm").format(Calendar.getInstance().getTime());
+            System.out.println("Start  " + timeStamp);
+            int[] extractedHourAndMinute = extractedHourAndMinute(args);
+            if (extractedHourAndMinute[0] != 0) {
+                System.out.println("The program will stop at " + extractedHourAndMinute[0] + ":"
+                        + ((extractedHourAndMinute[1] < 10) ? "0" + extractedHourAndMinute[1] : "" + extractedHourAndMinute[1]));
             } else {
-                System.out.println(howLongWorks / 60 + ":" + howLongWorks % 60);
+                System.out.println("The program will not stop automatically");
             }
+            boolean checkTime = true;
+            boolean ifTimeWasSend = extractedHourAndMinute[0] != 0;
+
+            while (checkTime) {
+                checkTime = ifSendTimeEqualsCurrentTime(checkTime, ifTimeWasSend, extractedHourAndMinute);
+                a = MouseInfo.getPointerInfo();
+                b = a.getLocation();
+                x = (int) b.getX();
+                y = (int) b.getY();
+                Robot r = new Robot();
+                r.mouseMove(x + 1, y + 1);
+                r.mouseMove(x - 1, y - 1);
+                Thread.sleep(55000);
+                howLongWorks = (int) (System.currentTimeMillis() - startTime) / 1000 / 60;
+                if ((howLongWorks % 60) < 10) {
+                    System.out.println(howLongWorks / 60 + ":0" + (howLongWorks % 60));
+                } else {
+                    System.out.println(howLongWorks / 60 + ":" + howLongWorks % 60);
+                }
+            }
+            LocalTime localTime = LocalTime.now();
+            System.out.println("The program was stopped at: " + localTime.getHour() + ":" + localTime.getMinute());
+        } catch (Exception e) {
+            e.printStackTrace();
         }
-        LocalTime localTime = LocalTime.now();
-        System.out.println("The program was stopped at: " + localTime.getHour() + ":" + localTime.getMinute());
     }
 
     public static boolean ifSendTimeEqualsCurrentTime(boolean checkTime, boolean ifTimeWasSend, int[] extractedHourAndMinute) {
@@ -56,7 +60,7 @@ public class MouseMover {
             if (hour == extractedHourAndMinute[0] && minute == extractedHourAndMinute[1]) {
                 return false;
             }
-        }
+        }   
         return true;
     }
 
